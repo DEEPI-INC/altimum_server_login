@@ -4,8 +4,8 @@ import type { NextRequest } from 'next/server'
 // 허용할 출처 목록 생성
 const allowedOrigins = [
   'http://localhost:5174',
-  'http://192.168.0.36:5174', // 내부 네트워크의 다른 PC 주소
-  'http://211.106.144.18:5174', // 외부 접속용 공인 IP 주소
+  'http://<내부ip>:5174', // 내부 네트워크의 다른 PC 주소
+  'http://<공인ip>:5174', // 외부 접속용 공인 IP 주소
   // 'https://my-real-domain.com' // 나중에 배포할 실제 도메인 주소
 ]
 
