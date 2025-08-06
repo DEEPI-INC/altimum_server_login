@@ -1,0 +1,46 @@
+// prisma/schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id             Int      @id @default(autoincrement())
+  email          String   @unique
+  name           String
+  phoneNumber    String
+  role           Role     @default(CUSTOMER)
+  hashedPassword String
+  createdAt      DateTime @default(now())
+  lastLoginAt    DateTime?
+  devices        Device[]
+}
+
+enum Role {
+  ADMIN
+  CUSTOMER
+}
+
+model Device {
+  id          Int      @id @default(autoincrement())
+  deviceName  String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  userId      Int
+  user        User     @relation(fields: [userId], references: [id])
+  cameras     Camera[]
+}
+
+model Camera {
+  id          Int      @id @default(autoincrement())
+  rtspAddress String   @unique
+  deviceId    Int
+  device      Device   @relation(fields: [deviceId], references: [id], onDelete: Cascade)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
